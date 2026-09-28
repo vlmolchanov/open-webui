@@ -6,7 +6,7 @@
 	import { WEBUI_API_BASE_URL } from '$lib/constants';
 	import { settings, config } from '$lib/stores';
 	import { injectCsp } from '$lib/utils/csp';
-	import { isValidHttpUrl } from '$lib/utils';
+	import { isValidCitationUrl, isValidHttpUrl } from '$lib/utils';
 
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import Textarea from '$lib/components/common/Textarea.svelte';
@@ -102,10 +102,10 @@
 			<div class=" text-sm font-medium self-center flex items-center">
 				{#if citation?.source?.name}
 					{@const document = mergedDocuments?.[0]}
-					{#if document?.metadata?.file_id || isValidHttpUrl(document.source?.url)}
+					{#if document?.metadata?.file_id || isValidCitationUrl(document.source?.url)}
 						<Tooltip
 							className="w-fit"
-							content={isValidHttpUrl(document.source?.url)
+							content={isValidCitationUrl(document.source?.url)
 								? $i18n.t('Open link')
 								: $i18n.t('Open file')}
 							placement="top-start"
@@ -115,7 +115,7 @@
 								class="hover:text-gray-500 dark:hover:text-gray-100 underline grow line-clamp-1"
 								href={document?.metadata?.file_id
 									? `${WEBUI_API_BASE_URL}/files/${document?.metadata?.file_id}/content${document?.metadata?.page !== undefined ? `#page=${document.metadata.page + 1}` : ''}`
-									: isValidHttpUrl(document.source?.url)
+									: isValidCitationUrl(document.source?.url)
 										? document.source.url
 										: `#`}
 								target="_blank"

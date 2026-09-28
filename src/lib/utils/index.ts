@@ -986,6 +986,14 @@ export const isValidHttpUrl = (string: string) => {
 	return url.protocol === 'http:' || url.protocol === 'https:';
 };
 
+export const isValidCitationUrl = (string: string) => {
+	try {
+		return ['http:', 'https:', 'consultantplus:'].includes(new URL(string).protocol);
+	} catch (_) {
+		return false;
+	}
+};
+
 const SAFE_LINK_PROTOCOLS = ['http:', 'https:', 'mailto:', 'tel:'];
 
 export const safeLinkUrl = (url: string): string | undefined => {
